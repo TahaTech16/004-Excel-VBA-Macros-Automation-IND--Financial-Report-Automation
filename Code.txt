@@ -1,0 +1,368 @@
+''****************
+''Business requirement:Financial Report Automation based on differenct criteria
+''Any types of Excel Automation, Report, Dashboard, VBA, Macros, MIS, Adv. Excel, SQL, Web Development using Django please contact me
+''Name:Mahetab
+''mahetabforwork@gmail.com
+''Mob:+91 9545302653
+''****************
+
+
+
+
+Dim lastRowFD As Integer
+Dim lastRowRD As Integer
+
+
+Sub oneViewStart()
+    
+    'Call applyFilter
+    
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets.Add After:=ActiveSheet
+    shtName = ActiveSheet.Name
+    
+    Sheets(shtName).Select
+    Sheets(shtName).Name = "FD"
+
+    Sheets("Form Responses").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+    
+    
+    Range("A1").Select
+    Range("A1:W" & lastRow).Select
+    Selection.Copy
+    Sheets("FD").Select
+    Range("A1").Select
+    ActiveSheet.Paste
+    Selection.Columns.AutoFit
+    Range("A1").Select
+    Application.CutCopyMode = False
+
+
+    Sheets("FD").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+    
+    
+    Sheets("FD").Select
+    
+'    Cells.Select
+'    Range("$A$1:$W$" & lastRow).Select
+'    ActiveSheet.Range("$A$1:$W$" & lastRow).RemoveDuplicates Columns:=Array(1, 2, 3, 4, 5, 6, 7 _
+'        , 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23), Header:=xlYes
+        
+    Range("A1:W" & lastRow).Select
+    Range("C1").Activate
+    'Range("C13").Activate
+    ActiveSheet.Range("$A$1:$W$" & lastRow).RemoveDuplicates Columns:=Array(2, 6), Header _
+        :=xlYes
+     
+    Range("A2").Select
+    Application.CutCopyMode = False
+  
+    Sheets("FD").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+  
+    lastRowFD = lastRow
+  
+    Range("A2:B" & lastRowFD).Select
+    Selection.Copy
+    
+    
+    
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRowRD = ActiveCell.Row
+    lastRowRD = lastRowRD + 1
+     
+    Range("A" & lastRowRD).Select
+    ActiveSheet.Paste
+    
+'/*
+
+'    Application.Workbooks("AXIS Closure report.xlsx").Activate
+'    Sheets("FD").Select
+'    Range("F2:F" & lastRowFD).Select
+'    Selection.Copy
+'    Application.Workbooks("one view MIS.xlsm").Activate
+'    Sheets("Reporting Data").Select
+'    Range("C" & lastRowRD).Select
+'    ActiveSheet.Paste
+
+'*/
+
+    
+    ''Net Premium
+
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("FD").Select
+    Range("F2:F" & lastRowFD).Select
+    Selection.Copy
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("D" & lastRowRD).Select
+    ActiveSheet.Paste
+
+    
+    
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("FD").Select
+    Range("D2:D" & lastRowFD).Select
+    Selection.Copy
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("F" & lastRowRD).Select
+    ActiveSheet.Paste
+
+    
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("FD").Select
+    Range("I2:I" & lastRowFD).Select
+    Selection.Copy
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("J" & lastRowRD).Select
+    ActiveSheet.Paste
+
+  
+  
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("FD").Select
+    Range("K2:K" & lastRowFD).Select
+    Selection.Copy
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("K" & lastRowRD).Select
+    ActiveSheet.Paste
+
+     
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("FD").Select
+    Range("L2:L" & lastRowFD).Select
+    Selection.Copy
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("M" & lastRowRD).Select
+    ActiveSheet.Paste
+     
+    
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("FD").Select
+    Range("V2:V" & lastRowFD).Select
+    Selection.Copy
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("P" & lastRowRD).Select
+    ActiveSheet.Paste
+     
+    Range("A1").Select
+    Application.CutCopyMode = False
+ 
+    Call vlookup
+    Call makeFormat
+    Call makeBorder
+    
+     
+     
+    Call saveWorkBook
+   
+    Windows("AXIS Closure report.xlsx").Activate
+    ActiveWindow.Close
+    ActiveWorkbook.Save
+     
+     
+     
+     
+     
+'    Application.Workbooks("AXIS Closure report.xlsx").Activate
+'    Sheets("FD").Select
+'    ActiveWindow.SelectedSheets.Delete
+    Application.ScreenUpdating = True
+    
+End Sub
+
+
+Sub applyFilter()
+    Application.ScreenUpdating = False
+    
+    Application.Workbooks("AXIS Closure report.xlsx").Activate
+    Sheets("Form Responses").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+        
+    Cells.Select
+    Selection.AutoFilter
+     
+    ActiveSheet.Range("$A$1:$W$" & lastRow).AutoFilter Field:=3, Criteria1:="=*cbg*" _
+        , Operator:=xlAnd
+     
+      
+'     ActiveSheet.Range("$A$1:$W$7079").AutoFilter Field:=3, Criteria1:="=*cbg*" _
+'        , Operator:=xlAnd
+    'Range("C5").Select
+    
+     
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+    
+'    ActiveSheet.Range("$A$1:$W$7079").AutoFilter Field:=1, Operator:= _
+'        xlFilterValues, Criteria2:=Array(1, "10/16/2020")
+        
+        
+     ActiveSheet.Range("$A$1:$W$" & lastRow).AutoFilter Field:=1, Operator:= _
+        xlFilterValues, Criteria2:=Array(1, "10/16/2020")
+    
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+    
+    
+    Range("A1:Z" & lastRow).Select
+    'Range("A1").Select
+    'Columns(2).Cells.SpecialCells(xlCellTypeVisible).Cells(2).Select
+    'Selection.End(xlDown).Select
+    'filterRow = ActiveCell.Row
+    
+ 
+ 
+End Sub
+
+
+
+Sub saveWorkBook()
+ ActiveWorkbook.Save
+ 
+End Sub
+
+Sub makeFormat()
+    
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+
+    Rows("2:2").Select
+    Selection.Copy
+    'Rows("3:149").Select
+    Rows("3:" & lastRow).Select
+    
+    Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    Range("A1").Select
+    Application.CutCopyMode = False
+    
+    End Sub
+
+
+
+
+Sub makeBorder()
+
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+
+    Range("A1:Q" & lastRow).Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+End Sub
+
+
+Sub vlookup()
+    
+    Application.Workbooks("one view MIS.xlsm").Activate
+    Sheets("Reporting Data").Select
+    Range("A1048576").Select
+    Selection.End(xlUp).Select
+    lastRow = ActiveCell.Row
+
+       
+    Range("G2").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC6,GRID!C1:C7,5,0)"
+       
+    Range("G3").Select
+    'Range("G2").Select
+    'Selection.Copy
+    Range("G2:G" & lastRow).Select
+    Selection.FillDown
+    
+    
+    Range("H2").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC6,GRID!C1:C7,6,0)"
+    Range("H3").Select
+    Range("H2:H" & lastRow).Select
+    Selection.FillDown
+    
+    
+    Range("I2").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC6,GRID!C1:C7,7,0)"
+    Range("I3").Select
+    Range("I2:I" & lastRow).Select
+    Selection.FillDown
+    
+    Range("L2").Select
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(RC6,GRID!C1:C7,3,0)"
+    Range("L3").Select
+    Range("L2:L" & lastRow).Select
+    Selection.FillDown
+
+    
+    
+    
+    Range("E2").Select
+    ActiveCell.FormulaR1C1 = "=RC[-1]/10^5"
+    Range("E3").Select
+    Range("E2:E" & lastRow).Select
+    Selection.FillDown
+    
+    
+End Sub
+
